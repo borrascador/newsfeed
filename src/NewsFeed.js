@@ -1,5 +1,5 @@
 import React from 'react';
-window.$ = window.jQuery;
+import $ from 'jquery';
 
 
 class Story extends React.Component {
@@ -60,7 +60,7 @@ class NewsFeed extends React.Component {
     let query = 
       'https://www.stellarbiotechnologies.com/media/press-releases/json' + 
       '?limit=' + limit;
-    window.$.getJSON(query).then(({ news }) => this.setState(
+    $.getJSON(query).then(({ news }) => this.setState(
       { 
         stories: news, 
         limit: limit
@@ -81,7 +81,7 @@ class NewsFeed extends React.Component {
         'https://www.stellarbiotechnologies.com/media/press-releases/json' + 
         '?limit=' + this.state.limit + 
         '&offset=' + this.state.limit * (this.state.offset + 1);
-      window.$.getJSON(query).then(({ news }) => this.setState(
+      $.getJSON(query).then(({ news }) => this.setState(
         { 
           stories: this.state.stories.concat(news),
           offset: this.state.offset + 1
