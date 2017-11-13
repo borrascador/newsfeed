@@ -15,7 +15,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "http://borrascador.github.io/newsfeed",
+  "homepage": "https://borrascador.github.io/newsfeed",
   "devDependencies": {
     "gh-pages": "^1.0.0"
   }
