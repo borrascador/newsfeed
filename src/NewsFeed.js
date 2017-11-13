@@ -27,15 +27,15 @@ class NewsFeed extends React.Component {
       limit: 10,
       offset: 0
     };
-    this.getList = this.getList.bind(this);
-    this.updateList = this.updateList.bind(this);
+    this.getStories = this.getStories.bind(this);
+    this.updateStories = this.updateStories.bind(this);
   }
   
   componentDidMount() {
     // First, load initial stories into state and render
     // Begin listening for scroll events
-    this.getList(this.state.limit);
-    window.addEventListener('scroll', this.updateList);
+    this.getStories(this.state.limit);
+    window.addEventListener('scroll', this.updateStories);
   }
   
   componentDidUpdate() {
@@ -44,16 +44,16 @@ class NewsFeed extends React.Component {
     let noScroll = window.innerHeight === document.body.scrollHeight;
     let noUpdate = this.state.offset === 0;
     if (noScroll && noUpdate) {
-      this.getList(this.state.limit * 2);
+      this.getStories(this.state.limit * 2);
     }
   }  
 
   componentWillUnmount() {
     // Cease listening for scroll events on exit
-    window.removeEventListener('scroll', this.updateList);
+    window.removeEventListener('scroll', this.updateStories);
   }
     
-  getList(limit) {
+  getStories(limit) {
     // Load initial list of stories
     // Will reload with bigger limit if stories do not fill page
     // New limit stored in state
@@ -68,12 +68,15 @@ class NewsFeed extends React.Component {
     ));
   }
   
-  updateList(event) {
+  updateStories(event) {
+    // Make sure that the user has scrolled to the bottom of the page
+    // Check whether this request has already been attempted
+    // Then append new stories to list and save new offset to state
     let scrollAtBottom = 
       window.innerHeight + window.pageYOffset >= document.body.scrollHeight;
-    let listUpdated =
+    let storiesUpdated =
       this.state.stories.length / this.state.limit === this.state.offset + 1;
-    if (scrollAtBottom && listUpdated) {
+    if (scrollAtBottom && storiesUpdated) {
       let query = 
         'https://www.stellarbiotechnologies.com/media/press-releases/json' + 
         '?limit=' + this.state.limit + 
